@@ -8,6 +8,11 @@ interface Friend {
   balance: number
 }
 
+interface ButtonProps {
+  handleClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
+  children: React.ReactNode
+}
+
 const initialFriends: Friend[] = [
   {
     id: 118836,
@@ -109,8 +114,8 @@ function Friend({ friend, handleSelect }) {
 function AddFriendForm({ handleClick, showForm, handleAddFriend }) {
   const [name, setName] = useState("")
 
-  function handleSubmit(e) {
-    e.preventDefault()
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
     if (!name) return
 
     const newFriend: Friend = {
@@ -144,7 +149,7 @@ function SplitForm({ splitFriend, editBalance }) {
   const [yourExpense, setYourExpense] = useState(0)
   const friendExpense = bill - yourExpense
 
-  function handleClick(e) {
+  function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault()
     console.log("Friend exp", friendExpense)
     if (whoPay === "you") {
@@ -186,7 +191,7 @@ function SplitForm({ splitFriend, editBalance }) {
   )
 }
 
-function Button({ children, handleClick }) {
+function Button({ children, handleClick }: ButtonProps) {
   return (
     <button className="button" onClick={handleClick}>
       {children}

@@ -1,7 +1,14 @@
 import { useState } from "react"
-
 import "./style.css"
-const initialFriends = [
+
+interface Friend {
+  id: number | string
+  name: string
+  image: string
+  balance: number
+}
+
+const initialFriends: Friend[] = [
   {
     id: 118836,
     name: "Clark",
@@ -24,26 +31,26 @@ const initialFriends = [
 
 export default function App() {
   const [showForm, setShowForm] = useState(false)
-  const [friends, setFriends] = useState(initialFriends)
-  const [splitFriend, setSplitFriend] = useState(null)
+  const [friends, setFriends] = useState<Friend[]>(initialFriends)
+  const [splitFriend, setSplitFriend] = useState<Friend>()
 
   function handleClick() {
     setShowForm((show) => !show)
   }
 
-  function handleAddFriend(newFriend) {
+  function handleAddFriend(newFriend: Friend) {
     setFriends((friends) => [...friends, newFriend])
   }
 
-  function handleSelect(friend) {
+  function handleSelect(friend: Friend) {
     setSplitFriend(friend)
   }
 
-  function editBalance(expense) {
+  function editBalance(expense: number) {
     setFriends((friends) =>
       friends
         .slice()
-        .map((f) => (f.id === splitFriend.id ? { ...f, balance: f.balance + expense } : f))
+        .map((f) => (f.id === splitFriend?.id ? { ...f, balance: f.balance + expense } : f))
     )
   }
 
@@ -62,11 +69,7 @@ export default function App() {
             handleAddFriend={handleAddFriend}
           />
         </div>
-        <SplitForm
-          splitFriend={splitFriend}
-          setSplitFriend={setSplitFriend}
-          editBalance={editBalance}
-        />
+        <SplitForm splitFriend={splitFriend} editBalance={editBalance} />
       </div>
     </div>
   )
@@ -75,7 +78,7 @@ export default function App() {
 function Friends({ friends, handleSelect }) {
   return (
     <ul>
-      {friends.map((f) => (
+      {friends.map((f: Friend) => (
         <Friend friend={f} key={f.id} handleSelect={handleSelect} />
       ))}
     </ul>
@@ -109,11 +112,12 @@ function AddFriendForm({ handleClick, showForm, handleAddFriend }) {
   function handleSubmit(e) {
     e.preventDefault()
     if (!name) return
-    const newFriend = {
+
+    const newFriend: Friend = {
       id: crypto.randomUUID(),
       name,
-      balance: 0,
       image: "https://i.pravatar.cc/48",
+      balance: 0,
     }
     console.log("New friend", newFriend)
     handleAddFriend(newFriend)
@@ -155,13 +159,13 @@ function SplitForm({ splitFriend, editBalance }) {
     <form className="form-split-bill">
       <h2>Split the bill with {splitFriend?.name}</h2>
       <label>Bill value</label>
-      <input type="text" value={bill} onChange={(e) => setBill(e.target.value)} />
+      <input type="text" value={bill} onChange={(e) => setBill(Number(e.target.value))} />
       <label>Your expense</label>
       <input
         type="text"
         disabled={whoPay !== "you"}
         value={yourExpense}
-        onChange={(e) => setYourExpense(e.target.value)}
+        onChange={(e) => setYourExpense(Number(e.target.value))}
       />
 
       <label>{splitFriend ? `${splitFriend.name}` : "Friend"} expense</label>
@@ -169,7 +173,7 @@ function SplitForm({ splitFriend, editBalance }) {
         type="text"
         disabled={whoPay === "you"}
         value={friendExpense}
-        onChange={(e) => setYourExpense(bill - e.target.value)}
+        onChange={(e) => setYourExpense(bill - Number(e.target.value))}
       />
 
       <label>Who is paying</label>

@@ -1,30 +1,14 @@
-# React + TypeScript + Vite
+<img src="https://github.com/liti-dev/eat-and-split/assets/78011560/f24297f0-4959-45e9-a6a2-0e6deecb02aa" width="500"/>  
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Eat and Split
+## Demo
+## Overview
+Friends who SPLIT bills STAY together! 
+## Tech Stack
+React, Vite, TS
+## Future improvements
+- Save friend list and balance to localStorage
+- Add multiple friends to split bill
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list

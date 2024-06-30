@@ -2,6 +2,7 @@
 
 # Eat and Split
 ## Demo
+Try it [here](https://eat-and-split-psi.vercel.app/) 
 ## Overview
 Friends who SPLIT bills STAY together! 
 ## Tech Stack

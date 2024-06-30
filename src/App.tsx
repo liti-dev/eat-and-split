@@ -8,10 +8,35 @@ interface Friend {
   balance: number
 }
 
+interface FriendProps {
+  friend: Friend
+  handleSelect: HandleSelect
+}
+
+interface FriendsProps {
+  handleSelect: HandleSelect
+  friends: Friend[]
+}
+
 interface ButtonProps {
-  handleClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
+  handleClick?: HandleClick
   children: React.ReactNode
 }
+
+interface AddFriendFormProps {
+  handleClick: HandleClick
+  showForm: boolean
+  handleAddFriend: HandleAddFriend
+}
+
+interface SplitFormProps {
+  splitFriend: Friend | undefined
+  editBalance: (newBalance: number) => void
+}
+
+type HandleSelect = (friend: Friend) => void
+type HandleClick = (event: React.MouseEvent<HTMLButtonElement>) => void
+type HandleAddFriend = (friend: Friend) => void
 
 const initialFriends: Friend[] = [
   {
@@ -61,7 +86,7 @@ export default function App() {
 
   return (
     <div className="app">
-      <img className="banner" src="/public/friends.svg" />
+      <img className="banner" src="/friends.svg" />
       <h1>
         Friends who <span>SPLIT</span> bills <span>STAY</span> together!
       </h1>
@@ -80,17 +105,17 @@ export default function App() {
   )
 }
 
-function Friends({ friends, handleSelect }) {
+function Friends({ friends, handleSelect }: FriendsProps) {
   return (
     <ul>
-      {friends.map((f: Friend) => (
+      {friends?.map((f: Friend) => (
         <Friend friend={f} key={f.id} handleSelect={handleSelect} />
       ))}
     </ul>
   )
 }
 
-function Friend({ friend, handleSelect }) {
+function Friend({ friend, handleSelect }: FriendProps) {
   return (
     <li>
       <img src={friend.image} />
@@ -111,7 +136,7 @@ function Friend({ friend, handleSelect }) {
   )
 }
 
-function AddFriendForm({ handleClick, showForm, handleAddFriend }) {
+function AddFriendForm({ handleClick, showForm, handleAddFriend }: AddFriendFormProps) {
   const [name, setName] = useState("")
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -143,7 +168,7 @@ function AddFriendForm({ handleClick, showForm, handleAddFriend }) {
   )
 }
 
-function SplitForm({ splitFriend, editBalance }) {
+function SplitForm({ splitFriend, editBalance }: SplitFormProps) {
   const [bill, setBill] = useState(0)
   const [whoPay, setWhoPay] = useState("you")
   const [yourExpense, setYourExpense] = useState(0)
